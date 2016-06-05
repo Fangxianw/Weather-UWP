@@ -8,6 +8,8 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Button x:Name="btnLocation" Content="定位" HorizontalAlignment="Left" Margin="230,175,0,0" VerticalAlignment="Top" Click="btnLocation_Click"/>
+        <TextBlock x:Name="textInfo" HorizontalAlignment="Left" Margin="130,310,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textWeather" VerticalAlignment="Bottom" Text=""/>
     </Grid>
 </Page>
