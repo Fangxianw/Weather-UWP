@@ -8,49 +8,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShowMyWeather.Handle
+namespace Weather.Service.Http
 {
-    /// <summary>
-    /// UWP Http POST/GET
-    /// </summary>
-    public class Http_Service
+    public class MHttp : IMHttp
     {
-
-        /// <summary>
-        /// 组装文本请求参数,URL编码
-        /// </summary>
-        /// <param name="parameters">Key-Value形式请求参数字典</param>
-        /// <returns>URL编码后的请求数据</returns>
-        public static string BuildQuery(IDictionary<string, string> parameters)
-        {
-            StringBuilder postData = new StringBuilder();
-            bool hasParam = false;
-            IEnumerator<KeyValuePair<string, string>> dem = parameters.GetEnumerator();
-            while (dem.MoveNext())
-            {
-                string name = dem.Current.Key;//键
-                string value = dem.Current.Value;//值
-
-                // 忽略参数名或参数值为空的参数
-                if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(value))
-                {
-                    if (hasParam)
-                    {
-                        postData.Append("&");
-                    }
-                    postData.Append(WebUtility.UrlEncode(name));
-                    postData.Append("=");
-                    postData.Append(WebUtility.UrlEncode(value));
-                    //postData.Append(value);
-                    hasParam = true;
-                }
-            }
-            return postData.ToString();
-        }
-
-
-
-        public static string HttpSend(string url, Dictionary<string, string> key_value, string method)
+        public string HttpSend(string url, Dictionary<string, string> key_value, string method)
         {
             var myClient = new HttpClient();
             var myRequest = new HttpRequestMessage();
@@ -76,6 +38,38 @@ namespace ShowMyWeather.Handle
             StreamReader sr = new StreamReader(st, Encoding.UTF8);
             string s = sr.ReadToEnd();
             return s;
+        }
+
+        /// <summary>
+        /// 组装文本请求参数,URL编码
+        /// </summary>
+        /// <param name="parameters">Key-Value形式请求参数字典</param>
+        /// <returns>URL编码后的请求数据</returns>
+        private static string BuildQuery(IDictionary<string, string> parameters)
+        {
+            StringBuilder postData = new StringBuilder();
+            bool hasParam = false;
+            IEnumerator<KeyValuePair<string, string>> dem = parameters.GetEnumerator();
+            while (dem.MoveNext())
+            {
+                string name = dem.Current.Key;//键
+                string value = dem.Current.Value;//值
+
+                // 忽略参数名或参数值为空的参数
+                if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(value))
+                {
+                    if (hasParam)
+                    {
+                        postData.Append("&");
+                    }
+                    postData.Append(WebUtility.UrlEncode(name));
+                    postData.Append("=");
+                    postData.Append(WebUtility.UrlEncode(value));
+                    //postData.Append(value);
+                    hasParam = true;
+                }
+            }
+            return postData.ToString();
         }
     }
 }
